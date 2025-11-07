@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Automation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Content Generator</h1>
+        <p class="subtitle">Entrez un sujet → l’IA génère un post LinkedIn complet + une image</p>
+
+        <!-- === FORMULAIRE UNIQUE === -->
+        <form id="content-form">
+            <input type="text" id="prompt" placeholder="Ex: L'importance de l'automatisation en entreprise..." required>
+            <button type="submit">Générer le post + image</button>
+        </form>
+
+        <!-- === LOADING === -->
+        <div id="loading" class="hidden">
+            <p>Génération du contenu en cours...</p>
+        </div>
+
+        <!-- === RÉSULTATS === -->
+        <div id="result" class="hidden">
+            <div class="section">
+                <h2>Titre</h2>
+                <p id="title" class="output"></p>
+            </div>
+            <div class="section">
+                <h2>Post LinkedIn</h2>
+                <p id="post" class="output"></p>
+            </div>
+            <div class="section">
+                <h2>Hashtags</h2>
+                <ul id="hashtags"></ul>
+            </div>
+
+            <!-- === IMAGE GÉNÉRÉE (CORRIGÉE) === -->
+            <div id="image-section" class="section" style="display:none;">
+                <h2>Image générée</h2>
+                <img id="generated-image" src="" alt="Image générée par IA" 
+                     style="display:none; max-width:100%; border-radius:12px; margin-top:10px;">
+                <button id="download-img" 
+                        style="display:none; margin-top:10px; background:#10b981; color:white; padding:10px; border:none; border-radius:8px; width:100%; cursor:pointer; font-weight:600;">
+                    Télécharger l’image
+                </button>
+            </div>
+
+            <button id="copy-post">Copier le post</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

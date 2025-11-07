@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #5a67d8;
+    margin-bottom: 8px;
+    font-size: 2em;
+}
+
+.subtitle {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+/* === FORMULAIRE === */
+input, button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+input {
+    border: 2px solid #e2e8f0;
+    transition: border, border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #5a67d8;
+}
+
+button {
+    background: #5a67d8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #4c51bf;
+}
+
+/* === LOADING === */
+#loading {
+    text-align: center;
+    color: #5a67d8;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+/* === RÉSULTATS === */
+#result {
+    margin-top: 30px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #5a67d8;
+    font-size: 1.2em;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.output {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 8px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    font-size: 0.95em;
+}
+
+#hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin-top: 8px;
+}
+
+#hashtags li {
+    background: #e0e7ff;
+    color: #5a67d8;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+/* === IMAGE GÉNÉRÉE === */
+#generated-image {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+#generated-image:hover {
+    transform: scale(1.02);
+}
+
+/* === BOUTONS === */
+#copy-post, #download-img {
+    margin-top: 20px;
+    background: #10b981;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+#copy-post:hover, #download-img:hover {
+    background: #059669;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

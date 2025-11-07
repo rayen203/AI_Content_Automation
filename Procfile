@@ -1,0 +1,1 @@
+web: uv run src/ai_content_automation/app.py
