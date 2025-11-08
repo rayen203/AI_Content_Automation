@@ -64,63 +64,52 @@ def home():
 
 
 # 🔹 Route principale de génération
-@app.route('/generate', methods=['POST'])
+@app.route("/generate", methods=["POST"])
 def generate():
     data = request.get_json()
-    prompt = data.get('prompt', '').strip()
-    
+    prompt = data.get("prompt", "").strip() if data else ""
+
     if not prompt:
-        return jsonify({"error": "Prompt requis"}), 400
+        return jsonify({"error": "Aucun prompt fourni."}), 400
 
-    # === DÉTECTION ENVIRONNEMENT ===
-    if os.getenv('RAILWAY_ENVIRONMENT'):  # Cloud (Railway)
-        result = {
-            "title": "Démo Live sur Railway",
-            "post": f"Vous avez tapé : \"{prompt}\".\n\n"
-                    "Cette app tourne en ligne ! L'image est générée en temps réel par Hugging Face.\n\n"
-                    "Prêt à automatiser votre contenu LinkedIn ?",
-            "hashtags": ["#IA", "#LinkedIn", "#Railway", "#Demo", "#Freelance"]
-        }
-    else:  # Local (Ollama)
-        try:
-            # Prompt renforcé pour forcer JSON
-            system_prompt = (
-                "Tu es un assistant qui génère des posts LinkedIn. "
-                "Retourne UNIQUEMENT un JSON valide avec les clés : title, post, hashtags (liste). "
-                "Pas de texte avant ou après. Exemple : "
-                '{"title": "Mon titre", "post": "Mon texte", "hashtags": ["#tag1", "#tag2"]}'
-            )
-            response = ollama.chat(model='llama3.2', messages=[
-                {'role': 'system', 'content': system_prompt},
-                {'role': 'user', 'content': f"Sujet : {prompt}"}
-            ])
-            raw = response['message']['content'].strip()
+    log.debug(f"Prompt reçu : {prompt}")
 
-            # Nettoie le JSON (enlève ```json, ```, etc.)
-            json_match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if not json_match:
-                raise ValueError("Aucun JSON trouvé")
-            clean_json = json_match.group(0)
-
-            result = json.loads(clean_json)
-
-        except json.JSONDecodeError as e:
-            log.error(f"JSON invalide : {e}\nRaw: {raw}")
-            return jsonify({"error": "JSON invalide", "raw": raw[:200]}), 500
-        except Exception as e:
-            log.error(f"Ollama error: {e}")
-            return jsonify({"error": "Ollama non disponible"}), 500
-
-    # === IMAGE (HF) ===
     try:
-        image_prompt = f"LinkedIn post about {prompt}, professional, clean, modern, blue tones"
-        image_url = generate_image_hf(image_prompt)
-        result["image_url"] = image_url
-    except Exception as e:
-        log.error(f"HF error: {e}")
-        result["image_url"] = None
+        # --- Étape 1 : Génération du texte via Ollama ---
+        full_prompt = f"""
+Tu es un expert LinkedIn.
+Sujet : "{prompt}"
+Génère un contenu inspirant.
+Réponds UNIQUEMENT en JSON valide :
+{{"title": "titre", "post": "post (200-300 caractères)", "hashtags": ["#tag1", "#tag2", "#tag3"]}}
+"""
 
-    return jsonify(result)
+        log.debug("Envoi du prompt à Ollama...")
+        response = ollama.chat(
+            model="llama3.2",
+            messages=[{"role": "user", "content": full_prompt}],
+            stream=False
+        )
+
+        raw = response["message"]["content"]
+        log.debug(f"Réponse brute Ollama : {raw}")
+
+        cleaned = clean_json(raw)
+        result = json.loads(cleaned)
+
+        # --- Étape 2 : Génération de l’image via Hugging Face ---
+        image_prompt = f"Illustration LinkedIn moderne et professionnelle sur le thème : {prompt}"
+        result["image_url"] = generate_image_hf(image_prompt)
+
+        return jsonify(result)
+
+    except json.JSONDecodeError as e:
+        log.error(f"Erreur JSON : {e}")
+        return jsonify({"error": "JSON invalide", "raw": raw}), 500
+
+    except Exception as e:
+        log.error(f"Erreur : {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
