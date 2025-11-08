@@ -2,7 +2,7 @@
 **Génère des posts LinkedIn engageants avec Llama 3.2 local via Ollama + Image IA via Hugging Face**  
 **100% privé, 100% local (texte) + IA image gratuite**  
 
-![Demo](demoo.gif)
+![Demo](demo_small.gif)
 
 ---
 
