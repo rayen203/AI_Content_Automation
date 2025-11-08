@@ -1,19 +1,19 @@
 # AI Content Generator  
-**Génère des posts LinkedIn engageants avec Llama 3.2 local via Ollama + Image IA via Hugging Face**  
-**100% privé, 100% local (texte) + IA image gratuite**  
+**Génère des posts LinkedIn engageants avec Llama 3.2 (local) + Image IA (Hugging Face)**  
+**100% privé (texte) • 0 API payante • Démo live en ligne**
 
 ![Demo](demo_tiny.gif)
 
 ---
 
 ## Fonctionnalités
-- Entrez un sujet → IA génère **titre + post + hashtags + image professionnelle**
-- Interface web moderne (Flask + HTML/CSS/JS)
-- **Texte** : 100% local via **Ollama (Llama 3.2)**
-- **Image** : Générée via **Hugging Face (modèle gratuit `FLUX.1-schnell`)**
+- **Sujet → Post complet** : Titre + texte + hashtags + **image professionnelle**
+- **Local** : Texte IA via **Ollama (Llama 3.2)** → **100% privé**
+- **Cloud** : Démo live sur **Railway** → **scalable & accessible**
+- **Image IA** : Générée par **Hugging Face (`FLUX.1-schnell`)** → **gratuit**
 - Copie du post en 1 clic
-- Téléchargement de l’image en 1 clic
-- **Zéro coût, zéro API payante**
+- Téléchargement de l’image
+- **Zéro coût, zéro abonnement**
 
 ---
 
@@ -24,8 +24,8 @@
 | `uv` | Gestionnaire de paquets ultra-rapide |
 | `Flask` | Backend web |
 | `Ollama` | IA texte locale (Llama 3.2) |
-| `Hugging Face` | IA image (gratuit, `FLUX.1-schnell`) |
-| `HTML/CSS/JS` | Frontend fluide & responsive |
+| `Hugging Face` | IA image (gratuit) |
+| `HTML/CSS/JS` | Frontend moderne & responsive |
 
 ---
 
@@ -33,19 +33,19 @@
 
 ```bash
 # 1. Clone le projet
-git clone https://github.com/ton-pseudo/AI_Content_Automation.git
+git clone https://github.com/rayen203/AI_Content_Automation.git
 cd AI_Content_Automation
 
-# 2. Crée l’environnement avec uv
+# 2. Installe les dépendances
 uv sync
 
-# 3. Lance Ollama (dans un autre terminal)
+# 3. Lance Ollama (autre terminal)
 ollama serve
 
-# 4. Télécharge le modèle (une seule fois)
+# 4. Télécharge le modèle (1 fois)
 ollama pull llama3.2
 
-# 5. Ajoute ton token Hugging Face (gratuit)
+# 5. Ajoute ton token Hugging Face
 echo "HF_TOKEN=hf_ton_token_ici" > .env
 
 # 6. Lance l’app
